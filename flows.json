@@ -34,7 +34,7 @@
         "fieldType": "msg",
         "format": "handlebars",
         "syntax": "mustache",
-        "template": "{\"client_id\":\"{{payload.clientid}}\",\"auth_groups\":\"{{payload.clientid}}\"}",
+        "template": "{\"client_id\":\"{{payload.clientid}}\",\"auth_groups\":\"pubs;subs\"}",
         "output": "json",
         "x": 340,
         "y": 220,
