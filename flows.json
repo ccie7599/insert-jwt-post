@@ -1,16 +1,8 @@
 [
     {
-        "id": "06ced7b1ad4ad468",
+        "id": "2556b63e0079236f",
         "type": "tab",
         "label": "Processor",
-        "disabled": false,
-        "info": "",
-        "env": []
-    },
-    {
-        "id": "e567b4ceea25909e",
-        "type": "tab",
-        "label": "Generate Test Traffic and see output ",
         "disabled": false,
         "info": "",
         "env": []
@@ -411,146 +403,63 @@
         "save": true
     },
     {
-        "id": "6f90fb369a7ee8f0",
-        "type": "mqtt in",
-        "z": "06ced7b1ad4ad468",
+        "id": "72616b58f25046a8",
+        "type": "http in",
+        "z": "2556b63e0079236f",
         "name": "",
-        "topic": "demo/electrolux/in",
-        "qos": "2",
-        "datatype": "auto",
-        "broker": "3c9fafa.7dd6a5",
-        "nl": false,
-        "rap": true,
-        "rh": 0,
-        "inputs": 0,
-        "x": 150,
-        "y": 100,
-        "wires": [
-            [
-                "7288f3d45c05bd2b",
-                "ab5725718a86f843"
-            ]
-        ]
-    },
-    {
-        "id": "7288f3d45c05bd2b",
-        "type": "debug",
-        "z": "06ced7b1ad4ad468",
-        "name": "",
-        "active": false,
-        "tosidebar": true,
-        "console": false,
-        "tostatus": false,
-        "complete": "false",
-        "statusVal": "",
-        "statusType": "auto",
-        "x": 490,
-        "y": 100,
-        "wires": []
-    },
-    {
-        "id": "bda1e2a51507a38b",
-        "type": "mqtt out",
-        "z": "06ced7b1ad4ad468",
-        "name": "",
-        "topic": "demo/electrolux/out",
-        "qos": "",
-        "retain": "",
-        "respTopic": "",
-        "contentType": "",
-        "userProps": "",
-        "correl": "",
-        "expiry": "",
-        "broker": "3c9fafa.7dd6a5",
-        "x": 560,
-        "y": 280,
-        "wires": []
-    },
-    {
-        "id": "ab5725718a86f843",
-        "type": "base64",
-        "z": "06ced7b1ad4ad468",
-        "name": "",
-        "action": "b64",
-        "property": "payload",
-        "x": 260,
-        "y": 200,
-        "wires": [
-            [
-                "455e54b29df31d40",
-                "c15be454c0184ef2"
-            ]
-        ]
-    },
-    {
-        "id": "455e54b29df31d40",
-        "type": "debug",
-        "z": "06ced7b1ad4ad468",
-        "name": "",
-        "active": false,
-        "tosidebar": true,
-        "console": false,
-        "tostatus": false,
-        "complete": "false",
-        "statusVal": "",
-        "statusType": "auto",
-        "x": 530,
+        "url": "/signing",
+        "method": "get",
+        "upload": false,
+        "swaggerDoc": "",
+        "x": 190,
         "y": 160,
-        "wires": []
-    },
-    {
-        "id": "c15be454c0184ef2",
-        "type": "json",
-        "z": "06ced7b1ad4ad468",
-        "name": "",
-        "property": "payload",
-        "action": "",
-        "pretty": false,
-        "x": 400,
-        "y": 240,
         "wires": [
             [
-                "bda1e2a51507a38b",
-                "645fcc1fa89fbd84"
+                "28c0c25a381eddcb",
+                "1d424b3cc4db2940"
             ]
         ]
     },
     {
-        "id": "645fcc1fa89fbd84",
-        "type": "debug",
-        "z": "06ced7b1ad4ad468",
+        "id": "28c0c25a381eddcb",
+        "type": "template",
+        "z": "2556b63e0079236f",
+        "name": "Create Claims",
+        "field": "payload",
+        "fieldType": "msg",
+        "format": "handlebars",
+        "syntax": "mustache",
+        "template": "{\"client_id\":\"{{payload.clientid}}\",\"auth_groups\":\"{{payload.clientid}}\"}",
+        "output": "json",
+        "x": 340,
+        "y": 220,
+        "wires": [
+            [
+                "1a6ffae9dc28fcf8",
+                "a2e59642ba3cadec",
+                "cea093fac2d6f8f1"
+            ]
+        ]
+    },
+    {
+        "id": "c7357ccc4438a716",
+        "type": "http response",
+        "z": "2556b63e0079236f",
         "name": "",
-        "active": false,
-        "tosidebar": true,
-        "console": false,
-        "tostatus": false,
-        "complete": "false",
-        "statusVal": "",
-        "statusType": "auto",
-        "x": 570,
-        "y": 200,
+        "statusCode": "",
+        "headers": {},
+        "x": 630,
+        "y": 240,
         "wires": []
     },
     {
-        "id": "2509492becaec517",
+        "id": "9e4b7a1d24e440d4",
         "type": "inject",
-        "z": "e567b4ceea25909e",
+        "z": "2556b63e0079236f",
         "name": "",
         "props": [
             {
-                "p": "payload.status",
-                "v": "",
-                "vt": "date"
-            },
-            {
-                "p": "payload.type",
-                "v": "aircon",
-                "vt": "str"
-            },
-            {
-                "p": "payload.model",
-                "v": "PureAir300",
-                "vt": "str"
+                "p": "payload"
             }
         ],
         "repeat": "",
@@ -558,34 +467,36 @@
         "once": false,
         "onceDelay": 0.1,
         "topic": "",
-        "x": 150,
-        "y": 140,
+        "payload": "-----BEGIN RSA PRIVATE KEY----- MIIEogIBAAKCAQEAoAzn2a2zHTSM6qux50n81+mLuVbjohXpMQ6zKp6SY08sFN8F qI/DBLmoyErw7DGAr7nau/zeAgSPzggCvpDDC1IULNbaZIHqpLdXSlMHVwnk621u RQIKtsxhAZrBpygSmX7dIVYm8crkzDhSneG8k0dYpilIrcHsNc0cwf+DrjjZR9Db lQ81Dt7WfaUdxGz/zUqHBpzYaQFwKotfwMBU1aGPF16L+xfIxBR4iikFj3Swwzeb MvtgvXz5pHeospCEeCxOR5NXdFGAySgUDDuId7nxpHya3eTsIp/TfMYjovQkLjR9 P2pJ6SZf7ceOPUJCOgled1UNnsRTBM4/z4m5cQIDAQABAoIBAHyuUReEd1ozC+vs YSTawHu61jxF8gLcqtKqruxup39xt9dyfcf4ZmYR8+hEaTa2wZcjY8C6loBf6V8J Yont3+O7xze/EFbn1lEG+ptN3xPxA0Jb92EO3CXXRWKoml+LmiG1cLJ9mM0Xz/E/ lyyjI/JfzDF1S8cAoPCwnsyKLpzTNRut4wT4CrF/q4I9fuYEBy9tZpkZPiqs4epo XyWdYv+quS8eWHFPnr0pfl1mAX7JiakYpI1QSV0As21DgUjCCXt4swTaqsbDv4fn +Gh56I6RGdZWBqtg2OEje9mjcor4U1SXPK+DE8FtRdD2YiCEo3zpN60a3NLPNdkS vCkECAECgYEAzLYCU+Hb0S+tYMYYrUvO8q1PNxX7xWAUQveTCYEZfjkX39u8A/AV KNJ9hk4cB9Ag3wYS+YY/XE+2t/uIqlf1VYyA5b6+ViVMj3yJAFg/Jw4cP6p33YHP 7fHJao7m62sy6OKIt7DJfkTw+Xrw/M+v41gI4nLmEy/q4xK+iJZuO0ECgYEAyCZn 0E2BZO1aDPBLnmokN8Tt2pAQi7/fdumwjfAAfawvD9RFwlInHlw7ibZJluuRg1Jy g/CvG2r8dXpTdRI2kK6LWr9WzAy1JL9r1tt6FXQeHpGxE3puU43kHTAGK3WWN6ux JACxzsH/ly0l/8c2q0r/bbHiqyN218Uro6Dh4jECgYAIcKCb8L3tW/fb+47c5jk8 DCUt8jwVISb0s9xeEfKJH7V6R0bzKpzUuAjw1puVPuF8EHYLz5shJTA1WauCymmV A1v1HO4gAx2q9Ml5OCoyZASKI28ZtNZrywIw4H9oyVyp+V0FpcZI7HK69nSlF7L6 vpBvNamCtQEMJ6OvYfRdgQKBgGYqXIGSnoMTOQ0zt5XUXkptZnBTa266cWn0nZ/G K6n6s0ckNrubTcaMlAOWnffApVVgR34b5HZdZSLeXy16L4oo3o9i7f5YWjq4z2Ys QCQlUp6OBdKIgzp5SkCv2+ZhLl2acWCMTjbZBgt4C1aFrN1A+iNXUvnCr44yYjUz ETpxAoGAW70CzToa4Nh0kx70DV4GjN0Nr/MRWPUjFe44RSn4IypSo9NtNg97mTfA aekNRc5XkrGuOy9regQzmDxOj/JwWfp+RvNbbD7liiGlbVueu2M6d9IN51PH8e73 2oyzzMxCRlWLOYserOaTK2INirDiwKCKlB50OPguWEPHr266+vM= -----END RSA PRIVATE KEY-----",
+        "payloadType": "str",
+        "x": 180,
+        "y": 480,
         "wires": [
             [
-                "af22c269fc69f502"
+                "fcb05fdd43622e17"
             ]
         ]
     },
     {
-        "id": "af22c269fc69f502",
-        "type": "base64",
-        "z": "e567b4ceea25909e",
+        "id": "fcb05fdd43622e17",
+        "type": "file",
+        "z": "2556b63e0079236f",
         "name": "",
-        "action": "str",
-        "property": "payload",
-        "x": 190,
-        "y": 180,
+        "filename": "/data/key",
+        "appendNewline": true,
+        "createDir": true,
+        "overwriteFile": "true",
+        "encoding": "none",
+        "x": 430,
+        "y": 500,
         "wires": [
-            [
-                "f2839a3495fbccce",
-                "ca4f21ea2134e3d3"
-            ]
+            []
         ]
     },
     {
-        "id": "f2839a3495fbccce",
+        "id": "a2e59642ba3cadec",
         "type": "debug",
-        "z": "e567b4ceea25909e",
+        "z": "2556b63e0079236f",
         "name": "",
         "active": true,
         "tosidebar": true,
@@ -595,72 +506,61 @@
         "statusVal": "",
         "statusType": "auto",
         "x": 480,
-        "y": 200,
+        "y": 120,
         "wires": []
     },
     {
-        "id": "ca4f21ea2134e3d3",
-        "type": "mqtt out",
-        "z": "e567b4ceea25909e",
+        "id": "8ee3af8774520803",
+        "type": "inject",
+        "z": "2556b63e0079236f",
         "name": "",
-        "topic": "demo/electrolux/in",
-        "qos": "",
-        "retain": "",
-        "respTopic": "",
-        "contentType": "",
-        "userProps": "",
-        "correl": "",
-        "expiry": "",
-        "broker": "3c9fafa.7dd6a5",
-        "x": 450,
-        "y": 280,
-        "wires": []
-    },
-    {
-        "id": "0d32bc84c41f2e4c",
-        "type": "comment",
-        "z": "e567b4ceea25909e",
-        "name": "Generate Test Traffic (Appliance Simulation)",
-        "info": "",
-        "x": 270,
-        "y": 100,
-        "wires": []
-    },
-    {
-        "id": "305ac224fc73a031",
-        "type": "comment",
-        "z": "e567b4ceea25909e",
-        "name": "View processed output ",
-        "info": "",
-        "x": 200,
-        "y": 380,
-        "wires": []
-    },
-    {
-        "id": "f000b8bb5353e18e",
-        "type": "mqtt in",
-        "z": "e567b4ceea25909e",
-        "name": "",
-        "topic": "demo/electrolux/out",
-        "qos": "2",
-        "datatype": "json",
-        "broker": "3c9fafa.7dd6a5",
-        "nl": false,
-        "rap": true,
-        "rh": 0,
-        "inputs": 0,
-        "x": 170,
-        "y": 460,
+        "props": [
+            {
+                "p": "payload"
+            },
+            {
+                "p": "topic",
+                "vt": "str"
+            }
+        ],
+        "repeat": "",
+        "crontab": "",
+        "once": false,
+        "onceDelay": 0.1,
+        "topic": "",
+        "payload": "",
+        "payloadType": "date",
+        "x": 230,
+        "y": 660,
         "wires": [
             [
-                "7c83b6a909b59844"
+                "d0ae7df008c7915e"
             ]
         ]
     },
     {
-        "id": "7c83b6a909b59844",
+        "id": "d0ae7df008c7915e",
+        "type": "file in",
+        "z": "2556b63e0079236f",
+        "name": "",
+        "filename": "/data/key",
+        "format": "utf8",
+        "chunk": false,
+        "sendError": false,
+        "encoding": "none",
+        "allProps": false,
+        "x": 430,
+        "y": 660,
+        "wires": [
+            [
+                "168dd46d5d681d13"
+            ]
+        ]
+    },
+    {
+        "id": "168dd46d5d681d13",
         "type": "debug",
-        "z": "e567b4ceea25909e",
+        "z": "2556b63e0079236f",
         "name": "",
         "active": true,
         "tosidebar": true,
@@ -669,8 +569,121 @@
         "complete": "false",
         "statusVal": "",
         "statusType": "auto",
-        "x": 460,
-        "y": 460,
+        "x": 670,
+        "y": 620,
         "wires": []
+    },
+    {
+        "id": "eeb55002d396fc62",
+        "type": "file in",
+        "z": "2556b63e0079236f",
+        "name": "",
+        "filename": "/etc/secret-volume/jwtRSA256-private.pem",
+        "format": "utf8",
+        "chunk": false,
+        "sendError": false,
+        "encoding": "none",
+        "allProps": false,
+        "x": 450,
+        "y": 420,
+        "wires": [
+            [
+                "09fdf088b964c018"
+            ]
+        ]
+    },
+    {
+        "id": "f4cd34fcb8d33291",
+        "type": "inject",
+        "z": "2556b63e0079236f",
+        "name": "",
+        "props": [
+            {
+                "p": "payload"
+            }
+        ],
+        "repeat": "",
+        "crontab": "",
+        "once": false,
+        "onceDelay": 0.1,
+        "topic": "",
+        "payload": "-----BEGIN RSA PRIVATE KEY----- MIIEogIBAAKCAQEAoAzn2a2zHTSM6qux50n81+mLuVbjohXpMQ6zKp6SY08sFN8F qI/DBLmoyErw7DGAr7nau/zeAgSPzggCvpDDC1IULNbaZIHqpLdXSlMHVwnk621u RQIKtsxhAZrBpygSmX7dIVYm8crkzDhSneG8k0dYpilIrcHsNc0cwf+DrjjZR9Db lQ81Dt7WfaUdxGz/zUqHBpzYaQFwKotfwMBU1aGPF16L+xfIxBR4iikFj3Swwzeb MvtgvXz5pHeospCEeCxOR5NXdFGAySgUDDuId7nxpHya3eTsIp/TfMYjovQkLjR9 P2pJ6SZf7ceOPUJCOgled1UNnsRTBM4/z4m5cQIDAQABAoIBAHyuUReEd1ozC+vs YSTawHu61jxF8gLcqtKqruxup39xt9dyfcf4ZmYR8+hEaTa2wZcjY8C6loBf6V8J Yont3+O7xze/EFbn1lEG+ptN3xPxA0Jb92EO3CXXRWKoml+LmiG1cLJ9mM0Xz/E/ lyyjI/JfzDF1S8cAoPCwnsyKLpzTNRut4wT4CrF/q4I9fuYEBy9tZpkZPiqs4epo XyWdYv+quS8eWHFPnr0pfl1mAX7JiakYpI1QSV0As21DgUjCCXt4swTaqsbDv4fn +Gh56I6RGdZWBqtg2OEje9mjcor4U1SXPK+DE8FtRdD2YiCEo3zpN60a3NLPNdkS vCkECAECgYEAzLYCU+Hb0S+tYMYYrUvO8q1PNxX7xWAUQveTCYEZfjkX39u8A/AV KNJ9hk4cB9Ag3wYS+YY/XE+2t/uIqlf1VYyA5b6+ViVMj3yJAFg/Jw4cP6p33YHP 7fHJao7m62sy6OKIt7DJfkTw+Xrw/M+v41gI4nLmEy/q4xK+iJZuO0ECgYEAyCZn 0E2BZO1aDPBLnmokN8Tt2pAQi7/fdumwjfAAfawvD9RFwlInHlw7ibZJluuRg1Jy g/CvG2r8dXpTdRI2kK6LWr9WzAy1JL9r1tt6FXQeHpGxE3puU43kHTAGK3WWN6ux JACxzsH/ly0l/8c2q0r/bbHiqyN218Uro6Dh4jECgYAIcKCb8L3tW/fb+47c5jk8 DCUt8jwVISb0s9xeEfKJH7V6R0bzKpzUuAjw1puVPuF8EHYLz5shJTA1WauCymmV A1v1HO4gAx2q9Ml5OCoyZASKI28ZtNZrywIw4H9oyVyp+V0FpcZI7HK69nSlF7L6 vpBvNamCtQEMJ6OvYfRdgQKBgGYqXIGSnoMTOQ0zt5XUXkptZnBTa266cWn0nZ/G K6n6s0ckNrubTcaMlAOWnffApVVgR34b5HZdZSLeXy16L4oo3o9i7f5YWjq4z2Ys QCQlUp6OBdKIgzp5SkCv2+ZhLl2acWCMTjbZBgt4C1aFrN1A+iNXUvnCr44yYjUz ETpxAoGAW70CzToa4Nh0kx70DV4GjN0Nr/MRWPUjFe44RSn4IypSo9NtNg97mTfA aekNRc5XkrGuOy9regQzmDxOj/JwWfp+RvNbbD7liiGlbVueu2M6d9IN51PH8e73 2oyzzMxCRlWLOYserOaTK2INirDiwKCKlB50OPguWEPHr266+vM= -----END RSA PRIVATE KEY-----",
+        "payloadType": "str",
+        "x": 170,
+        "y": 400,
+        "wires": [
+            [
+                "eeb55002d396fc62"
+            ]
+        ]
+    },
+    {
+        "id": "09fdf088b964c018",
+        "type": "debug",
+        "z": "2556b63e0079236f",
+        "name": "",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "false",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 730,
+        "y": 340,
+        "wires": []
+    },
+    {
+        "id": "1d424b3cc4db2940",
+        "type": "debug",
+        "z": "2556b63e0079236f",
+        "name": "",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "false",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 370,
+        "y": 80,
+        "wires": []
+    },
+    {
+        "id": "f359fcc9e24f259c",
+        "type": "debug",
+        "z": "2556b63e0079236f",
+        "name": "",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "false",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 710,
+        "y": 180,
+        "wires": []
+    },
+    {
+        "id": "cea093fac2d6f8f1",
+        "type": "jwt sign",
+        "z": "2556b63e0079236f",
+        "name": "",
+        "alg": "RS256",
+        "exp": 3600,
+        "jwkurl": "",
+        "jwkkid": "",
+        "secret": "",
+        "key": "/etc/secret-volume/ssh-privatekey",
+        "signvar": "payload",
+        "storetoken": "payload",
+        "x": 480,
+        "y": 300,
+        "wires": [
+            [
+                "c7357ccc4438a716"
+            ]
+        ]
     }
 ]
