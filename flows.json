@@ -11,17 +11,18 @@
         "id": "72616b58f25046a8",
         "type": "http in",
         "z": "2556b63e0079236f",
-        "name": "",
-        "url": "/signing",
-        "method": "get",
+        "name": "Listen on /API for POSTS from EdgeWorkers",
+        "url": "/api",
+        "method": "post",
         "upload": false,
         "swaggerDoc": "",
-        "x": 190,
-        "y": 160,
+        "x": 700,
+        "y": 340,
         "wires": [
             [
                 "28c0c25a381eddcb",
-                "1d424b3cc4db2940"
+                "c7357ccc4438a716",
+                "024b55d7d70bcc3b"
             ]
         ]
     },
@@ -29,18 +30,17 @@
         "id": "28c0c25a381eddcb",
         "type": "template",
         "z": "2556b63e0079236f",
-        "name": "Create Claims",
+        "name": "Create JWT Claims",
         "field": "payload",
         "fieldType": "msg",
         "format": "handlebars",
         "syntax": "mustache",
-        "template": "{\"client_id\":\"{{payload.clientid}}\",\"auth_groups\":\"pubs;subs\"}",
+        "template": "{\"value1\":\"{{payload.value1}}\",\"value2\":\"{{payload.value2}}\"}",
         "output": "json",
-        "x": 340,
-        "y": 220,
+        "x": 620,
+        "y": 380,
         "wires": [
             [
-                "a2e59642ba3cadec",
                 "cea093fac2d6f8f1"
             ]
         ]
@@ -49,224 +49,11 @@
         "id": "c7357ccc4438a716",
         "type": "http response",
         "z": "2556b63e0079236f",
-        "name": "",
+        "name": "Async Acknowledgement of POST to EW Client",
         "statusCode": "",
         "headers": {},
-        "x": 630,
-        "y": 240,
-        "wires": []
-    },
-    {
-        "id": "9e4b7a1d24e440d4",
-        "type": "inject",
-        "z": "2556b63e0079236f",
-        "name": "",
-        "props": [
-            {
-                "p": "payload"
-            }
-        ],
-        "repeat": "",
-        "crontab": "",
-        "once": false,
-        "onceDelay": 0.1,
-        "topic": "",
-        "payload": "",
-        "payloadType": "str",
-        "x": 180,
-        "y": 480,
-        "wires": [
-            [
-                "fcb05fdd43622e17"
-            ]
-        ]
-    },
-    {
-        "id": "fcb05fdd43622e17",
-        "type": "file",
-        "z": "2556b63e0079236f",
-        "name": "",
-        "filename": "/data/key",
-        "appendNewline": true,
-        "createDir": true,
-        "overwriteFile": "true",
-        "encoding": "none",
-        "x": 430,
-        "y": 500,
-        "wires": [
-            []
-        ]
-    },
-    {
-        "id": "a2e59642ba3cadec",
-        "type": "debug",
-        "z": "2556b63e0079236f",
-        "name": "",
-        "active": true,
-        "tosidebar": true,
-        "console": false,
-        "tostatus": false,
-        "complete": "false",
-        "statusVal": "",
-        "statusType": "auto",
-        "x": 480,
-        "y": 120,
-        "wires": []
-    },
-    {
-        "id": "8ee3af8774520803",
-        "type": "inject",
-        "z": "2556b63e0079236f",
-        "name": "",
-        "props": [
-            {
-                "p": "payload"
-            },
-            {
-                "p": "topic",
-                "vt": "str"
-            }
-        ],
-        "repeat": "",
-        "crontab": "",
-        "once": false,
-        "onceDelay": 0.1,
-        "topic": "",
-        "payload": "",
-        "payloadType": "date",
-        "x": 230,
-        "y": 660,
-        "wires": [
-            [
-                "d0ae7df008c7915e"
-            ]
-        ]
-    },
-    {
-        "id": "d0ae7df008c7915e",
-        "type": "file in",
-        "z": "2556b63e0079236f",
-        "name": "",
-        "filename": "/data/key",
-        "format": "utf8",
-        "chunk": false,
-        "sendError": false,
-        "encoding": "none",
-        "allProps": false,
-        "x": 430,
-        "y": 660,
-        "wires": [
-            [
-                "168dd46d5d681d13"
-            ]
-        ]
-    },
-    {
-        "id": "168dd46d5d681d13",
-        "type": "debug",
-        "z": "2556b63e0079236f",
-        "name": "",
-        "active": true,
-        "tosidebar": true,
-        "console": false,
-        "tostatus": false,
-        "complete": "false",
-        "statusVal": "",
-        "statusType": "auto",
-        "x": 670,
-        "y": 620,
-        "wires": []
-    },
-    {
-        "id": "eeb55002d396fc62",
-        "type": "file in",
-        "z": "2556b63e0079236f",
-        "name": "",
-        "filename": "/etc/secret-volume/jwtRSA256-private.pem",
-        "format": "utf8",
-        "chunk": false,
-        "sendError": false,
-        "encoding": "none",
-        "allProps": false,
-        "x": 450,
-        "y": 420,
-        "wires": [
-            [
-                "09fdf088b964c018"
-            ]
-        ]
-    },
-    {
-        "id": "f4cd34fcb8d33291",
-        "type": "inject",
-        "z": "2556b63e0079236f",
-        "name": "",
-        "props": [
-            {
-                "p": "payload"
-            }
-        ],
-        "repeat": "",
-        "crontab": "",
-        "once": false,
-        "onceDelay": 0.1,
-        "topic": "",
-        "payload": "-----BEGIN RSA PRIVATE KEY----- MIIEogIBAAKCAQEAoAzn2a2zHTSM6qux50n81+mLuVbjohXpMQ6zKp6SY08sFN8F qI/DBLmoyErw7DGAr7nau/zeAgSPzggCvpDDC1IULNbaZIHqpLdXSlMHVwnk621u RQIKtsxhAZrBpygSmX7dIVYm8crkzDhSneG8k0dYpilIrcHsNc0cwf+DrjjZR9Db lQ81Dt7WfaUdxGz/zUqHBpzYaQFwKotfwMBU1aGPF16L+xfIxBR4iikFj3Swwzeb MvtgvXz5pHeospCEeCxOR5NXdFGAySgUDDuId7nxpHya3eTsIp/TfMYjovQkLjR9 P2pJ6SZf7ceOPUJCOgled1UNnsRTBM4/z4m5cQIDAQABAoIBAHyuUReEd1ozC+vs YSTawHu61jxF8gLcqtKqruxup39xt9dyfcf4ZmYR8+hEaTa2wZcjY8C6loBf6V8J Yont3+O7xze/EFbn1lEG+ptN3xPxA0Jb92EO3CXXRWKoml+LmiG1cLJ9mM0Xz/E/ lyyjI/JfzDF1S8cAoPCwnsyKLpzTNRut4wT4CrF/q4I9fuYEBy9tZpkZPiqs4epo XyWdYv+quS8eWHFPnr0pfl1mAX7JiakYpI1QSV0As21DgUjCCXt4swTaqsbDv4fn +Gh56I6RGdZWBqtg2OEje9mjcor4U1SXPK+DE8FtRdD2YiCEo3zpN60a3NLPNdkS vCkECAECgYEAzLYCU+Hb0S+tYMYYrUvO8q1PNxX7xWAUQveTCYEZfjkX39u8A/AV KNJ9hk4cB9Ag3wYS+YY/XE+2t/uIqlf1VYyA5b6+ViVMj3yJAFg/Jw4cP6p33YHP 7fHJao7m62sy6OKIt7DJfkTw+Xrw/M+v41gI4nLmEy/q4xK+iJZuO0ECgYEAyCZn 0E2BZO1aDPBLnmokN8Tt2pAQi7/fdumwjfAAfawvD9RFwlInHlw7ibZJluuRg1Jy g/CvG2r8dXpTdRI2kK6LWr9WzAy1JL9r1tt6FXQeHpGxE3puU43kHTAGK3WWN6ux JACxzsH/ly0l/8c2q0r/bbHiqyN218Uro6Dh4jECgYAIcKCb8L3tW/fb+47c5jk8 DCUt8jwVISb0s9xeEfKJH7V6R0bzKpzUuAjw1puVPuF8EHYLz5shJTA1WauCymmV A1v1HO4gAx2q9Ml5OCoyZASKI28ZtNZrywIw4H9oyVyp+V0FpcZI7HK69nSlF7L6 vpBvNamCtQEMJ6OvYfRdgQKBgGYqXIGSnoMTOQ0zt5XUXkptZnBTa266cWn0nZ/G K6n6s0ckNrubTcaMlAOWnffApVVgR34b5HZdZSLeXy16L4oo3o9i7f5YWjq4z2Ys QCQlUp6OBdKIgzp5SkCv2+ZhLl2acWCMTjbZBgt4C1aFrN1A+iNXUvnCr44yYjUz ETpxAoGAW70CzToa4Nh0kx70DV4GjN0Nr/MRWPUjFe44RSn4IypSo9NtNg97mTfA aekNRc5XkrGuOy9regQzmDxOj/JwWfp+RvNbbD7liiGlbVueu2M6d9IN51PH8e73 2oyzzMxCRlWLOYserOaTK2INirDiwKCKlB50OPguWEPHr266+vM= -----END RSA PRIVATE KEY-----",
-        "payloadType": "str",
-        "x": 170,
-        "y": 400,
-        "wires": [
-            [
-                "eeb55002d396fc62"
-            ]
-        ]
-    },
-    {
-        "id": "09fdf088b964c018",
-        "type": "debug",
-        "z": "2556b63e0079236f",
-        "name": "",
-        "active": true,
-        "tosidebar": true,
-        "console": false,
-        "tostatus": false,
-        "complete": "false",
-        "statusVal": "",
-        "statusType": "auto",
-        "x": 730,
+        "x": 1230,
         "y": 340,
-        "wires": []
-    },
-    {
-        "id": "1d424b3cc4db2940",
-        "type": "debug",
-        "z": "2556b63e0079236f",
-        "name": "",
-        "active": true,
-        "tosidebar": true,
-        "console": false,
-        "tostatus": false,
-        "complete": "false",
-        "statusVal": "",
-        "statusType": "auto",
-        "x": 370,
-        "y": 80,
-        "wires": []
-    },
-    {
-        "id": "f359fcc9e24f259c",
-        "type": "debug",
-        "z": "2556b63e0079236f",
-        "name": "",
-        "active": true,
-        "tosidebar": true,
-        "console": false,
-        "tostatus": false,
-        "complete": "false",
-        "statusVal": "",
-        "statusType": "auto",
-        "x": 710,
-        "y": 160,
         "wires": []
     },
     {
@@ -279,15 +66,96 @@
         "jwkurl": "",
         "jwkkid": "",
         "secret": "",
-        "key": "/etc/secret-volume/ssh-privatekey",
+        "key": "/data/key",
         "signvar": "payload",
         "storetoken": "payload",
-        "x": 480,
-        "y": 300,
+        "x": 580,
+        "y": 420,
         "wires": [
             [
-                "c7357ccc4438a716"
+                "b0fd5e67a441669d"
             ]
         ]
+    },
+    {
+        "id": "b0fd5e67a441669d",
+        "type": "change",
+        "z": "2556b63e0079236f",
+        "name": "Insert Token into POST to BQ",
+        "rules": [
+            {
+                "t": "set",
+                "p": "payload",
+                "pt": "msg",
+                "to": "",
+                "tot": "str"
+            }
+        ],
+        "action": "",
+        "property": "",
+        "from": "",
+        "to": "",
+        "reg": false,
+        "x": 650,
+        "y": 460,
+        "wires": [
+            [
+                "22284ad40aa3394c"
+            ]
+        ]
+    },
+    {
+        "id": "22284ad40aa3394c",
+        "type": "http request",
+        "z": "2556b63e0079236f",
+        "name": "POST request to BQ with data",
+        "method": "POST",
+        "ret": "txt",
+        "paytoqs": "ignore",
+        "url": "",
+        "tls": "",
+        "persist": false,
+        "proxy": "",
+        "insecureHTTPParser": false,
+        "authType": "",
+        "senderr": false,
+        "headers": [],
+        "x": 650,
+        "y": 500,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "024b55d7d70bcc3b",
+        "type": "bigquery insert",
+        "z": "2556b63e0079236f",
+        "bigquery": "",
+        "dataset": "",
+        "table": "",
+        "name": "Input directly into BQ via Service Account Credential",
+        "x": 1250,
+        "y": 400,
+        "wires": []
+    },
+    {
+        "id": "e1a156500238eb82",
+        "type": "comment",
+        "z": "2556b63e0079236f",
+        "name": "Alternative- use node.js module for BQ inserts",
+        "info": "",
+        "x": 1220,
+        "y": 440,
+        "wires": []
+    },
+    {
+        "id": "fdaa044f5b6a5d7a",
+        "type": "comment",
+        "z": "2556b63e0079236f",
+        "name": "Initial Approach - sign/insert JWT into POST to BQ",
+        "info": "",
+        "x": 260,
+        "y": 500,
+        "wires": []
     }
 ]
